@@ -1,0 +1,49 @@
+﻿body {
+    margin:0px;
+    padding:0px;
+}
+
+.sidenav {
+background-color: #f1f1f1;
+height: 100%;
+}
+.row.content {
+    /*height: 610px;*/
+    height:100vh;
+}
+.navbar{
+    margin:0px!important;
+    border-radius:0px;
+}
+.row{
+    margin:0px;
+}
+.admin-header{
+    border-radius:0px;
+    margin:0px;
+}
+
+.admin-header-head{
+    height:52px;
+    background:#6699ff;
+}
+.text-head-left{
+    margin-top:18px;
+}
+.admin-header-head h4{
+    color:#fff;
+}
+
+.admin-main-block-left{
+    margin:0px;
+    background:#737373;
+    /*height:615px;*/
+    height:100vh;
+}
+
+.admin-main-block-right{
+    margin:0px;
+    background:#e6e6e6;
+    float:right;
+    /*height:1200px;*/
+}

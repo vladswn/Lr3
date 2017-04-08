@@ -1,0 +1,87 @@
+﻿@*@model Project.Models.Course*@
+@using Project.Models
+@model Course
+
+@{
+    Layout = "~/Views/Shared/_AdminDetailPage.cshtml";
+}
+
+<div>
+    <h4>Course</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionCourse)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionCourse)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImagePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SrartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SrartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            Пользователи курса
+        </dt>
+
+        <dd>
+            @foreach(var us in Model.Users)
+            {
+                <table class="table-bordered">
+                    <tr>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>E-mail</th>
+                    </tr>
+                    <tr>
+                        <td>@us.Name</td>
+                        <td>@us.Surname</td>
+                        <td>@us.Email</td>
+                    </tr>
+                </table>
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CourseId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

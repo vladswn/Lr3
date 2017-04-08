@@ -1,0 +1,18 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutDetailPage.cshtml";
+}
+
+<div class="container" ng-controller="crudcontroller"> 
+    <table class="table table-bordered">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+        </tr>
+        <tr ng-repeat="serv in Categories">
+            <td></td>
+            <td>{{serv.Title}}</td>
+        </tr>
+    </table>
+
+</div>

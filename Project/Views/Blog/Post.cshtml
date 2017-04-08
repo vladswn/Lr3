@@ -1,0 +1,86 @@
+﻿@model Project.Models.Blog
+
+@{
+    ViewBag.Title = "Новини: "+Model.Title;
+    Layout = "~/Views/Shared/_LayoutDetailPage.cshtml";
+}
+
+
+<div class="container-fluid" style="margin-top:70px;margin-bottom:20px;">
+    <div class="row">
+
+        <div class="col-md-9" style="border:2px solid #F5F5F5;margin-top:20px;margin-bottom:10px;
+        border-radius:2px;
+        box-shadow: 0px 0px 27px -4px rgba(107,109,110,1);">
+           <div class="row">
+               <div class="col-md-12">
+                   <h3><strong>@Html.DisplayFor(model=> model.Title)</strong></h3>
+                   <p><strong>  Автор @Html.DisplayFor(model => model.UserName) @Model.Comments.Count()</strong></p>
+                   <p>
+                       Опубліковано:
+                       <span>
+                           <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                           @Model.CreateTime.ToLongDateString() @Model.CreateTime.ToShortTimeString()
+                       </span>
+                   </p>
+                   <p>
+                       <div class="row">
+                           <div class="col-md-2">
+                               <div id="fb-root"></div>
+                               <div class="fb-share-button" data-href="@Request.Url.AbsoluteUri" data-layout="button_count" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Поделиться</a></div>
+                           </div>
+                           <div class="col-md-2">
+                               <script type="text/javascript" src="https://vk.com/js/api/share.js?94" charset="windows-1251"></script>
+
+                               <!-- Put this script tag to the place, where the Share button will be -->
+                               <script type="text/javascript">
+                                document.write(VK.Share.button(false,{type: "link", text: "Поделиться"}));</script>
+                           </div>
+                       </div>
+                   </p>
+
+                   <div class="row">
+                       <div class="col-md-12">
+                           @if (Model.ImagePath != null)
+                           {
+                               <img src="@Url.Content(Model.ImagePath)" alt="image" class="img-responsive"/>
+                           }
+                           else
+                           {
+                               <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTU4ZWNhNjE3ZTkgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMnB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNThlY2E2MTdlOSI+PHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI4OS44MDQ2ODc1IiB5PSIxMDUuMSI+MjQyeDIwMDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==" class="img-responsive" />
+                           }
+
+                       </div>
+                   </div>
+
+                   
+                   <p>
+                       @Html.Raw(Model.Description)
+                   </p>
+               </div>
+           </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @{ Html.RenderAction("Comment", "Blog", new { blogID = Model.BlogId } );}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <h3 style="text-align:center;"><strong>Последнии новости</strong></h3>
+            @{ Html.RenderAction("LastPost");}
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+<script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&appId=289316071264293&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+}

@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+
+    <div class="navbar navbar-default navbar-fixed-top my-nav">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("Головна сторінка", "Index", "Home", null, new { @class = "color_link" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Про нас", "About", "Home")
+                    </li>
+                    <li>
+
+                        @Html.ActionLink("Новини", "Posts", "Blog")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Курси", "Courses", "Home")
+                    </li>
+                    @if (Request.IsAuthenticated)
+                    {
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                @User.Identity.Name
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li>@Html.ActionLink("Admin panel", "Index", "Admin")</li>
+                                }
+                                <li>@Html.ActionLink("Мій профіль", "Index", "Manage") </li>
+                                <li>@Html.ActionLink("Вихід", "LogOff", "Account")</li>
+
+                            </ul>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Реєстрація", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Вхід", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    @*<div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                
+
+              
+
+            </div>
+        </div>
+    </div>*@
+
+
+    @RenderBody()
+
+    <footer class="main-footer">
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Some info</h3>
+                <ul>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3 class="text-center">We are in social networks</h3>
+                <a href="#">Twitter </a>
+                <a href="#">Facebook </a>
+                <a href="#">Vk.com </a>
+                <a href="#">YouTube </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h4>&copy;@DateTime.Now.Year</h4>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

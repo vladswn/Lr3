@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Project.Models.Comment>
+
+@foreach (var comment in Model)
+{
+
+    <div class="div_comment">
+        <div class="div_comment_top">
+            <div class="comment_time">@comment.DatePosted</div>
+            <div class="comment_user_name">@comment.UserName</div>
+            <div>@comment.BlogId </div>
+        </div>
+        <div class="div_comment_bot">
+            @comment.Body
+        </div>
+    </div>
+}
+
+

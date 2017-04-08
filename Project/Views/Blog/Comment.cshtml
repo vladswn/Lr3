@@ -1,0 +1,96 @@
+﻿@*@model IEnumerable<Project.Models.Comment>*@
+@model PagedList.IPagedList<Project.Models.Comment>
+@using PagedList.Mvc;
+
+
+
+
+@{
+    Layout = null;
+}
+
+@using (Ajax.BeginForm("Comment", new { returnUrl = Request.Url.AbsoluteUri, blogId = ViewBag.BlogId }, new AjaxOptions
+{
+    UpdateTargetId = "comments",
+    InsertionMode = InsertionMode.InsertAfter
+}))
+{
+   
+    if (User.Identity.IsAuthenticated)
+    {
+        @Html.TextArea("Body", null, new { @class = "textarea_comment", rows = 3, cols = 70, @placeholder = "Введите сообщение" })
+        <br />
+        <input type="submit" value="Отправить" class="btm_comment" />
+    }
+    if (!User.Identity.IsAuthenticated)
+    {
+        <h3>Коментарии доступны только авторезированным пользователям </h3>
+    }
+
+}
+
+
+
+
+<div>
+    <div id="comments">
+        <div id="scrolList">
+            @Html.Partial("_Items")
+        </div>
+    </div>
+    
+</div>
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("Comment", new { page = page, blogId = ViewBag.BlogId })
+, PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(PagedListRenderOptions.PageNumbersOnly,
+ new AjaxOptions
+ {
+     InsertionMode = InsertionMode.Replace,
+     HttpMethod = "Get",
+     UpdateTargetId = "scrolList"
+ }))
+</div>
+
+@*<script type="text/javascript">
+    $(function () {
+        $('div#loading').hide();
+        var page = 0;
+        var _inCallback = false;
+        function loadItems() {
+            if (page > -1 && !_inCallback) {
+                _inCallback = true;
+                page++;
+                $('div#loading').show();
+
+                $.ajax({
+                    type: 'GET',
+                    //url: '/Blog/Comment/'+page,
+                    url: '/Blog/Comment?blogId=' + '&id=' + page,
+                    success: function (data, textstatus) {
+                        if (data != '') {
+                            $("#scrolList").append(data);
+                        }
+                        else {
+                            page = -1;
+                        }
+                        _inCallback = false;
+                        $("div#loading").hide();
+                    }
+                });
+            }
+        }
+        // обработка события скроллинга
+        $(window).scroll(function () {
+            if ($(window).scrollTop()  == $(document).height() - $(window).height()) {
+
+                loadItems();
+            }
+        });
+        //$(function () {
+        //    $('#btnLoad').click(function () {
+        //        loadItems();
+        //    });
+        //});
+    });
+</script>*@

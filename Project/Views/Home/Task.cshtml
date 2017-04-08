@@ -1,0 +1,190 @@
+﻿@*@model IEnumerable<Project.Models.Task>*@
+@model PagedList.IPagedList<Project.Models.Task>
+@using PagedList.Mvc;
+
+@{
+    Layout = "~/Views/Shared/_LayoutDetailPage.cshtml";
+}
+
+
+@*<div class="container" style="border:1px solid #d9d9d9;background: #e6e6e6;margin-top:70px;">
+    @foreach (var item in Model)
+    {
+        <div class="row" style="margin-bottom:30px;margin-top:30px;">
+            <div class="col-md-12" style="background: #fff;border:1px solid #d9d9d9;">
+                <h3><strong>@item.Course.Title</strong></h3>
+                    <h4><strong>@item.Title</strong></h4>
+            </div>
+        </div>
+
+        foreach (var file in item.Files)
+        {
+            if (file.FilePath != null)
+            {
+                <div class="row" style="border:1px solid #d9d9d9;background:#fff;margin-bottom:20px;padding-bottom:10px;">
+                    <div class="col-md-12">
+                        <h4>Материалы к уроку:</h4>
+                        <br />
+                            <a href="@Url.Action("Download", "Home",new { filepath = file.Name })" class="btn btn-default" style="margin-left:10px;">
+                                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                @file.Name
+                            </a>
+                    </div>
+                </div>
+
+            }
+        }
+
+
+        <div class="row" style="background: #fff;border:1px solid #d9d9d9;padding-bottom:20px;padding-top:10px;">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        @item.Content
+                        <br />
+                        <br />
+                    </div>
+
+                    <div class="col-md-12">
+                        @foreach(var video in item.Videos)
+                        {
+                        string newPath = video.VideoPath.Replace("watch?v=", "embed/");
+
+                                <div class="embed-responsive embed-responsive-4by3">
+                                    <iframe style="height:400px;margin-bottom:10px;" class="embed-responsive-item col-md-10 col-md-offset-1" src="@Url.Content(newPath)" frameborder="0" allowfullscreen></iframe>
+                                </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom:20px;">
+            <div class="col-md-12">
+                @Html.PagedListPager(Model, page => Url.Action("Task", new { task = item.CourseId, page }), new PagedListRenderOptions
+            {
+                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                DisplayLinkToIndividualPages = false,
+                ContainerDivClasses = null,
+                UlElementClasses = new[] { "pager" },
+                DelimiterBetweenPageNumbers = item.Title,
+                ClassToApplyToFirstListItemInPager = "previous",
+                ClassToApplyToLastListItemInPager = "next",
+                LinkToPreviousPageFormat = "&larr; Предыдущий урок",
+                LinkToNextPageFormat = "Следующий урок &rarr;"
+            })
+            </div>
+        </div>
+        <div>
+            @{ Html.RenderAction("TaskList", "Home",item.CourseId);}
+        </div>
+
+    }
+    
+
+</div>*@
+
+<div class="container-fluid" style="margin-top:70px;">
+    @foreach (var item in Model)
+    {
+        <div class="row" >
+            <div class="col-md-2">
+                <div class="list-group">
+                    <a href="#" class="list-group-item disabled">Все темы</a>
+                    @{ Html.RenderAction("TaskList", "Home", item.CourseId);}
+                </div>
+                
+            </div>
+
+            <div class="col-md-10" style="border:1px solid #d9d9d9;background: #e6e6e6;">
+                <div class="row" style="margin-bottom:30px;margin-top:30px;">
+                    <div class="col-md-12" style="background: #fff;border:1px solid #d9d9d9;">
+                        <h3><strong>@item.Course.Title</strong></h3>
+                        <h4><strong>@item.Title</strong></h4>
+                    </div>
+                </div>
+
+                @foreach (var s in item.Files)
+                {
+                    if (s.FilePath != null)
+                    {
+                        <div class="row" style="border:1px solid #d9d9d9;background:#fff;margin-bottom:20px;padding-bottom:10px;">
+                            <div class="col-md-12">
+                                <h4>Материалы к уроку:</h4>
+                                <br />
+                                @foreach (var file in item.Files)
+                                {
+                                        <a href="@Url.Action("Download", "Home",new { filepath = file.Name })" class="btn btn-default" style="margin-left:10px;">
+                                            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                            @file.Name
+                                        </a>
+                                }
+                            </div>
+                        </div>
+                    }
+                    break;
+                }
+
+                    
+                
+                
+
+
+
+                        <div class="row" style="background: #fff;border:1px solid #d9d9d9;padding-bottom:20px;padding-top:10px;">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @item.Content
+                                        <br />
+                                        <br />
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        @foreach (var video in item.Videos)
+                                        {
+                                            string newPath = video.VideoPath.Replace("watch?v=", "embed/");
+
+                                            <div class="embed-responsive embed-responsive-4by3">
+                                                <iframe style="height:400px;margin-bottom:10px;" class="embed-responsive-item col-md-10 col-md-offset-1" src="@Url.Content(newPath)" frameborder="0" allowfullscreen></iframe>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom:20px;">
+                            <div class="col-md-12">
+                                @Html.PagedListPager(Model, page => Url.Action("Task", new { task = item.CourseId, page }), new PagedListRenderOptions
+                   {
+                       DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                       DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                       DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                       DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                       DisplayLinkToIndividualPages = false,
+                       ContainerDivClasses = null,
+                       UlElementClasses = new[] { "pager" },
+                       DelimiterBetweenPageNumbers = item.Title,
+                       ClassToApplyToFirstListItemInPager = "previous",
+                       ClassToApplyToLastListItemInPager = "next",
+                       LinkToPreviousPageFormat = "&larr; Предыдущий урок",
+                       LinkToNextPageFormat = "Следующий урок &rarr;"
+                   })
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+        </div>
+    }
+    
+</div>
+

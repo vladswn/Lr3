@@ -1,0 +1,271 @@
+﻿<!DOCTYPE html>
+<html ng-app="myangularapp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/admin")
+    @Scripts.Render("~/bundles/angular")
+    <script src="~/Scripts/CRUD/Module.js"></script>
+    <script src="~/Scripts/CRUD/Service.js"></script>
+    <script src="~/Scripts/CRUD/Controller.js"></script>
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
+    <script src="~/Scripts/tinymce/langs/ru.js"></script>
+
+
+    <script type="text/javascript">
+        tinymce.init({
+            selector: 'textarea',
+            height: 500,
+            theme: 'modern',
+            plugins: [
+              'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+              'searchreplace wordcount visualblocks visualchars code fullscreen',
+              'insertdatetime media nonbreaking save table contextmenu directionality',
+              'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+            ],
+            toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons | codesample | fontselect | fontsizeselect',
+            image_advtab: true,
+            templates: [
+              { title: 'Test template 1', content: 'Test 1' },
+              { title: 'Test template 2', content: 'Test 2' }
+            ],
+            content_css: [
+              '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
+              '//www.tinymce.com/css/codepen.min.css'
+            ],
+            language: 'ru',
+            fontsize_formats: '6pt 8pt 10pt 12pt 14pt 16pt 18pt 20pt 22pt 24pt 26pt 28pt 30pt 32pt 34pt 36pt',
+            font_formats: 'Andale Mono=andale mono,times;' + 'Arial=arial,helvetica,sans-serif;' + 'Arial Black=arial black,avant garde;' + 'Book Antiqua=book antiqua,palatino;' + 'Comic Sans MS=comic sans ms,sans-serif;' + 'Courier New=courier new,courier;' + 'Georgia=georgia,palatino;' + 'Helvetica=helvetica;' + 'Impact=impact,chicago;' + 'Symbol=symbol;' + 'Tahoma=tahoma,arial,helvetica,sans-serif;' + 'Terminal=terminal,monaco;' + 'Times New Roman=times new roman,times;' + 'Trebuchet MS=trebuchet ms,geneva;' + 'Verdana=verdana,geneva;' + 'Webdings=webdings;' + 'Wingdings=wingdings,zapf dingbats'
+        });
+    </script>
+</head>
+<body>
+
+    <nav class="navbar navbar-default ">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("ADMIN PANEL", "Index", "Admin", null, new { @class = "navbar-brand" })
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="@Url.Action("Index", "Admin")">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "Home")">
+                        <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                        Site
+                    </a>
+                </li>
+                <li><a> Вы вошли как: @User.Identity.Name </a></li>
+                <li>@Html.ActionLink("Выход", "LogOff", "Account")</li>
+            </ul>
+        </div>
+    </nav>
+
+    @*<div class="container">
+            <div class="row">
+                <div class="col-md-2 ">
+                    <div class="list-group">
+                        @Html.ActionLink("Users List", "UsersList", "Admin", null, new { @class="list-group-item" })
+                        @Html.ActionLink("Role List", "RoleList", "Admin", null, new { @class = "list-group-item" })
+                        @Html.ActionLink("Category List", "CategoryList","Admin", null, new { @class = "list-group-item" })
+                        @Html.ActionLink("Course List", "CorseList", "Admin", null, new { @class = "list-group-item" })
+
+                        @Html.ActionLink("Users List", "UsersList", "Admin", null, new { @class = "list-group-item" })
+                        @Html.ActionLink("Role List", "RoleList", "Admin", null, new { @class = "list-group-item" })
+                        @Html.ActionLink("Category List", "CategoryList", "Admin", null, new { @class = "list-group-item" })
+                        @Html.ActionLink("Course List", "CorseList", "Admin", null, new { @class = "list-group-item" })
+
+                    </div>
+                </div>
+                <div class="colm-md-8 col-md-offset-3">
+                    <div class="row" style="margin-bottom:0px;">
+
+                            <div class="col-md-5 panel panel-default">
+                                Some statistics here
+                            </div>
+                            <div class="col-md-6 col-md-offset-1 panel panel-default">
+                                Some statistics here
+                            </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 panel panel-default">
+                            @RenderBody()
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>*@
+
+    @*<div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3" style="height:100%;">
+                    <h2>Menu</h2>
+                    <ul class="nav nav-pills nav-stacked">
+                        <li>@Html.ActionLink("Users List", "UsersList", "Admin", null, new { @class = "list-group-item" })</li>
+                        <li>@Html.ActionLink("Role List", "RoleList", "Admin", null, new { @class = "list-group-item" })</li>
+                        <li>@Html.ActionLink("Category List", "CategoryList", "Admin", null, new { @class = "list-group-item" })</li>
+                        <li>@Html.ActionLink("Course List", "CorseList", "Admin", null, new { @class = "list-group-item" })</li>
+                    </ul>
+                </div>
+
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="panel panel-default">
+                                Some statistics here
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="panel panel-default">
+                                Some statistics here
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+    <div class="container-fluid">
+        <div class="row content" style="margin:0px;">
+            <div class="col-sm-3 sidenav hidden-xs">
+                <h2 class="well">Site Name</h2>
+                <ul class="nav nav-pills nav-stacked">
+
+                    <li>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                            Курси
+                            <span class="caret"></span>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="@Url.Action("CorseList", "Admin")">
+                                        <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                                        Список курсів
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("TaskList", "Admin")">
+                                        <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>
+                                        Уроки
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("FileList", "Admin")">
+                                        <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                                        Файли
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("VideoList", "Admin")">
+                                        <span class="glyphicon glyphicon-film" aria-hidden="true"></span>
+                                        Відео
+                                    </a>
+                                </li>
+                            </ul>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("UsersList", "Admin")">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            Список користувачів
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("RoleList", "Admin")">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            Список ролей
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("CategoryList", "Admin")">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            Список категорій
+                        </a>
+                    </li>
+
+
+
+
+                    <li>
+                        <a href="@Url.Action("TeacherList", "Admin")">
+                            <span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span>
+                            Викладачі
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("PositionList", "Admin")">
+                            <span class="glyphicon glyphicon-tower" aria-hidden="true"></span>
+                            Посади
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("BlogList", "Admin")">
+                            <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
+                            Новини
+                        </a>
+                    </li>
+
+
+
+
+
+                    @*<li>@Html.ActionLink("Users List", "UsersList", "Admin")</li>*@
+                    @*<li>@Html.ActionLink("Role List", "RoleList", "Admin")</li>*@
+                    @*<li>@Html.ActionLink("Category List", "CategoryList", "Admin")</li>*@
+                    @*<li>@Html.ActionLink("Course List", "CorseList", "Admin")</li>*@
+                    @*<li>@Html.ActionLink("Task List", "TaskList", "Admin")</li>*@
+                    @*<li>@Html.ActionLink("File List", "FileList", "Admin")</li>*@
+                    @*<li>@Html.ActionLink("Video List", "VideoList", "Admin")</li>*@
+                </ul><br>
+            </div>
+            <br>
+
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="well">
+                            @RenderBody()
+
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+                
+               
+            </div>
+        </div>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

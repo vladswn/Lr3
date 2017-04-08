@@ -1,0 +1,12 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_LayoutDetailPage.cshtml";
+}
+
+<h1 class="text-danger">@Model.Exception.Message</h1>
+
+<h2 class="text-danger">У ході роботи виникли деякі пробелми.</h2>
+
+@Html.ActionLink("Назад", @Model.ActionName, @Model.ControllerName)

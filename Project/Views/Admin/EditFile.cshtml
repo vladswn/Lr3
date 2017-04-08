@@ -1,0 +1,41 @@
+﻿@model Project.Models.File
+
+@{
+    ViewBag.Title = "Edit file";
+    Layout = "~/Views/Shared/_AdminDetailPage.cshtml";
+}
+
+@using (Html.BeginForm("EditFile", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>File</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.FileId)
+
+        <div class="form-group">
+            <div class="control-label col-md-2">
+                <input type="file" name="src" />
+            </div>
+            <div class="col-md-6 col-md-push-6">
+                @Html.DisplayFor(model=> model.Name)
+                @if (Model.FilePath != null)
+                {
+                    @Html.HiddenFor(model => model.FilePath)
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

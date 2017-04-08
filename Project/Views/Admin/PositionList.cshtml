@@ -1,0 +1,168 @@
+﻿@model IEnumerable<Project.Models.Position>
+
+@{
+    Layout = "~/Views/Shared/_AdminDetailPage.cshtml";
+}
+
+<p>
+    <a href="@Url.Action("CreatePosition", "Admin")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        Add new position
+    </a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            <a href="@Url.Action("EditPosition", "Admin",new { id=item.PositionId })" title="Редактировать" class="btn btn-primary">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+            </a>
+            <a href="@Url.Action("PositionDetails", "Admin",new { id=item.PositionId })" title="Просмотерть детальней" class="btn btn-primary">
+                <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
+            </a>
+            <a href="@Url.Action("DeletePosition", "Admin",new { id=item.PositionId })" title="Удалить" class="btn btn-primary modal_item">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </a>
+        </td>
+    </tr>
+}
+
+</table>
+
+<hr />
+<h3>WEB API</h3>
+<br />
+    <div ng-controller="crudcontroller">
+        <button type="button" class="btn btn-default" data-target="#addNew" data-toggle="modal">Добавить должность</button>
+        <br />
+        <br />
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>#</th>
+                <th>Посада</th>
+                <th>Дія</th>
+            </tr>
+            <tr ng-repeat="pos in Positions">
+                <td>{{pos.PositionId}}</td>
+                <td>{{pos.Title}}</td>
+                <td>
+                    <button type="button" class="btn btn-danger" data-target="#deleteRecor" data-toggle="modal" ng-click="getPositionId(pos)">Удалить</button>
+                    <button type="button" class="btn btn-success" data-target="#editRecord" data-toggle="modal" ng-click="getPositionId(pos)">Редактировать</button>
+                </td>
+            </tr>
+        </table>
+        
+        <div class="modal" id="addNew" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="text-info">Додати нову посаду</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" name="AddNewForm">
+
+
+                            <div class="form-group">
+                                <input class="form-control" readonly="readonly" ng-model="PositionId" type="hidden" placeholder="Book Number" />
+                            </div>
+                            <div class="form-group">
+                                <label class="text-info">Посада </label>
+                                <input class="form-control" ng-model="Title" type="text" required />
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnSave" data-dismiss="modal" ng-click="savePosition();  clear()">Зберігти</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">Закрити</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="modal" role="dialog" id="editRecord">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="clear()">&times;</button>
+                        <h3 class="text-info">Редагувати запис</h3>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <input class="form-control" readonly="readonly" ng-model="PositionId" type="hidden" placeholder="Book Number" />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-info">Посада </label>
+                            <input class="form-control" ng-model="Title" type="text" required />
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="updatePosition()">Зберігти</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">Закрити</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" role="dialog" id="deleteRecor" ng-click="clear()">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" ng-click="clear()">&times;</button>
+                        <h3 class="text-info">Видалити запис?</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <p>Посада:{{Title}}</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="deletePosition(PositionId)">Видалити</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">Закрити</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".modal_item").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#dialogContent').html(data);
+                    $('#modDialog').modal('show');
+                });
+            });
+        })
+    </script>
+}

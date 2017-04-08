@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Project.Models.Task>
+
+@{ 
+    int counter = 1;
+}
+
+@foreach (var items in Model)
+{
+  
+    @Html.ActionLink(items.Title, "Task", "Home", new { task = items.CourseId, page = @counter }, new { @class= "list-group-item" } )
+        
+    @*<span>@counter</span>*@
+    counter++;
+
+}
+
+
+

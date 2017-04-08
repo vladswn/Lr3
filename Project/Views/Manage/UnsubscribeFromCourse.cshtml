@@ -1,0 +1,25 @@
+﻿@using Project.Models
+@model Course
+
+@{ 
+    Layout = null;
+}
+
+@using (Html.BeginForm("UnsubscribeFromCourse", "Manage", new { Id = Model.CourseId }, FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog" style="width:350px;">
+        <div class="modal-content">
+            <div class="modal-header alert alert-info">Отписка</div>
+            <div class="modal-body">
+                <h4>Хотите отписаться от курса @Html.DisplayFor(model => model.Title) ?</h4>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Отписаться" class="btn btn-primary" role="button" />
+                <button class="btn btn-danger" data-dismiss="modal" area-hidden="true">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+
+}

@@ -1,0 +1,79 @@
+﻿@using Project.Models
+@model Course
+
+@{ 
+    Layout = null;
+}
+
+@*@using (Html.BeginForm("AddCourse", "Home", new { Id = Model.CourseId }, FormMethod.Post, null))
+{
+    <p>
+        Хотите записатся на курс?
+    </p>
+    @Html.AntiForgeryToken()
+
+
+    /**/
+    foreach (var user in ViewBag.Us)
+    {
+        @User.Identity.Name
+        @user.Id
+        if (Model.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault() != null)
+        {
+            if (Model.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().Courses.Contains(Model)/* && Model.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault() != null*/)
+            {
+                <input type="submit" value="Подписаться на курс" class="btn btn-primary disabled" role="button" />
+            }
+        }
+        else
+        {
+            <input type="submit" value="Подписаться на курс" class="btn btn-primary" role="button" />
+        }
+        break;
+    }
+       
+}*@
+
+@using (Html.BeginForm("AddCourse", "Home", new { Id = Model.CourseId }, FormMethod.Post, null))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-dialog" style="width:400px;">
+        <div class="modal-content">
+            <div class="modal-body">
+                Хотите записаться на курс?
+                <br />
+                <br />
+                <input type="submit" value="Подписаться на курс" class="btn btn-primary" role="button" />
+                <button class="btn btn-primary" data-dismiss="modal" area-hidden="true">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    @*<p>
+        Хотите записатся на курс?
+    </p>
+    @Html.AntiForgeryToken()
+
+
+    /**/
+    foreach (var user in ViewBag.Us)
+    {
+        @User.Identity.Name
+        @user.Id
+        if (Model.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault() != null)
+        {
+            if (Model.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault().Courses.Contains(Model)/* && Model.Users.Where(s => s.UserName == User.Identity.Name).FirstOrDefault() != null*/)
+            {
+                <input type="submit" value="Подписаться на курс" class="btn btn-primary disabled" role="button" />
+            }
+        }
+        else
+        {
+            <input type="submit" value="Подписаться на курс" class="btn btn-primary" role="button" />
+        }
+        break;
+    }*@
+
+}
